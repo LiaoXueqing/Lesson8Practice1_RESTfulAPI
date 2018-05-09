@@ -13,6 +13,10 @@ public class Company {
     private String companyName;
     private Integer employeesNumber;
 
+    @OneToMany(mappedBy = "Company",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+
+    private Set<Employee> employees = new HashSet<>();
+
     public Company() {
     }
 

@@ -6,6 +6,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 public class Employee {
+
     @Id
     @GeneratedValue
     private Long id;
@@ -14,6 +15,13 @@ public class Employee {
     private String gender;
     private Integer salary;
     private Long companyId;
+
+    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH,
+            CascadeType.REMOVE,CascadeType.ALL},optional = false,fetch = FetchType.LAZY)
+
+    //设置在employee表中的关联字段(外键)
+    @JoinColumn(name = "companyId")
+    private Company company;
 
     public Employee() {
     }
