@@ -12,7 +12,6 @@ public class Company {
     private Long id;
     private String companyName;
     private Integer employeesNumber;
-
     @OneToMany(mappedBy = "Company",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
 
     private Set<Employee> employees = new HashSet<>();
