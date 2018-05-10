@@ -16,9 +16,7 @@ public class Employee {
     private Integer salary;
     private Long companyId;
 
-    @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.REFRESH,
-            CascadeType.REMOVE,CascadeType.ALL},optional = false,fetch = FetchType.LAZY)
-
+    @ManyToOne(cascade = CascadeType.ALL,optional = false)
     //设置在employee表中的关联字段(外键)
     @JoinColumn(name = "companyId")
     private Company company;
@@ -32,6 +30,18 @@ public class Employee {
         this.gender = gender;
         this.salary = salary;
         this.companyId = companyId;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getCompanyId() {

@@ -7,14 +7,15 @@ import java.util.Set;
 
 @Entity
 public class Company {
+
+    @OneToMany(mappedBy = "Company",cascade = CascadeType.ALL)
+    private Set<Employee> employees=new HashSet<>();
+
     @Id
     @GeneratedValue
     private Long id;
     private String companyName;
     private Integer employeesNumber;
-    @OneToMany(mappedBy = "Company",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
-
-    private Set<Employee> employees = new HashSet<>();
 
     public Company() {
     }
@@ -22,6 +23,14 @@ public class Company {
     public Company(String companyName, Integer employeesNumber) {
         this.companyName = companyName;
         this.employeesNumber = employeesNumber;
+    }
+
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 
     public Long getId() {
