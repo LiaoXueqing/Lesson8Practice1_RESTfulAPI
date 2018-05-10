@@ -24,16 +24,16 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Page<Employee> findAll(Pageable pageable);
 
     //4.筛选出所有男性Employee
-//    @Query(value = "select * from Employee e where e.gender = male",nativeQuery = true)
-//    String findEmployeeByGender(String gender);
+    @Query(value = "select * from Employee e where e.gender = male",nativeQuery = true)
+    String findEmployeeByGender(String gender);
 
     //5.增加一个employee
     @Override
     Employee save(Employee employee);
 
     // 6.更新某个employee
-    @Modifying
-    Employee updateEmployee(Employee employee);
+//    @Modifying
+//    Employee updateEmployee(Employee employee);
 
     //7.删除某个employee
     @Override

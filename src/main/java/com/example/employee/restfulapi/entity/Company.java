@@ -8,7 +8,7 @@ import java.util.Set;
 @Entity
 public class Company {
 
-    @OneToMany(mappedBy = "Company",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "inCompany",cascade = CascadeType.ALL)
     private Set<Employee> employees=new HashSet<>();
 
     @Id

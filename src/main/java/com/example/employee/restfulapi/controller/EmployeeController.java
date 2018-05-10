@@ -1,6 +1,9 @@
 package com.example.employee.restfulapi.controller;
 
 import com.example.employee.restfulapi.entity.Employee;
+import com.example.employee.restfulapi.repository.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,20 +11,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
+
     //在此处完成Employee API
     //1.获取employee列表
     @GetMapping
     public List<Employee> getEmployees(){
-        return null;
+        List<Employee> employees = employeeRepository.findAll();
+        return employees;
     }
     //2.获取某个具体employee
     @GetMapping(value="/{id}")
-    public Employee getEmployeeById(int id){
-        return null;
+    public Employee getEmployeeById(@PathVariable Long id){
+        return employeeRepository.getOne(id);
     }
     //3.分页查询，page等于1，pageSize等于5
     @GetMapping(value="page/1/pageSize/5")
-    public List<Employee> getEmployeeByPage(){
+    public List<Employee> getEmployeeByPage() {
+//        return employeeRepository.findAll(PageRequest.of(1,5));
         return null;
     }
 

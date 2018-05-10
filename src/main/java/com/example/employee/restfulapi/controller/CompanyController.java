@@ -10,7 +10,7 @@ import java.util.List;
 @RequestMapping("/companies")
 public class CompanyController {
     //在此处完成Company API
-    // 1.获取company列表
+    //1.获取company列表
     @GetMapping
     public List<Company> getCompanies(){
         return null;

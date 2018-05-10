@@ -14,43 +14,42 @@ public class Employee {
     private Integer age;
     private String gender;
     private Integer salary;
-    private Long companyId;
+//    private Long companyId;
 
     @ManyToOne(cascade = CascadeType.ALL,optional = false)
-    //设置在employee表中的关联字段(外键)
-    @JoinColumn(name = "companyId")
-    private Company company;
+    @JoinColumn(name = "companyId",referencedColumnName = "id")
+    private Company inCompany;
 
     public Employee() {
     }
 
-    public Employee(String name, Integer age, String gender, Integer salary, Long companyId) {
+    public Employee(String name, Integer age, String gender, Integer salary,Company inCompany) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
-        this.companyId = companyId;
+        this.inCompany = inCompany;
     }
 
-    public Company getCompany() {
-        return company;
+    public Company getInCompany() {
+        return inCompany;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setInCompany(Company inCompany) {
+        this.inCompany = inCompany;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public Long getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
-    }
+//    public Long getCompanyId() {
+//        return companyId;
+//    }
+//
+//    public void setCompanyId(Long companyId) {
+//        this.companyId = companyId;
+//    }
 
     public Integer getSalary() {
         return salary;
