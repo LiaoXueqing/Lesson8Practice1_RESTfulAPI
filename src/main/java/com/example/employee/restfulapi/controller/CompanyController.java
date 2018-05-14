@@ -1,48 +1,65 @@
 package com.example.employee.restfulapi.controller;
 
 import com.example.employee.restfulapi.entity.Company;
-import com.example.employee.restfulapi.entity.Employee;
+import com.example.employee.restfulapi.repository.CompanyRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/companies")
 public class CompanyController {
-    //在此处完成Company API
+    @Autowired
+    private CompanyRepository companyRepository;
     //1.获取company列表
-    @GetMapping
-    public List<Company> getCompanies(){
-        return null;
+    @GetMapping("")
+    public ResponseEntity  getCompanies() throws Exception{
+        return new ResponseEntity(companyRepository.findAll(), HttpStatus.OK);
     }
     //2.获取某个具体company
-    @GetMapping(value="/{id}")
-    public Company getCompanyById(int id){
-        return null;
+    @GetMapping("/{id}")
+    public ResponseEntity  getCompanyById(@PathVariable Long id) throws Exception{
+        return new ResponseEntity(companyRepository.findOne(id), HttpStatus.OK);
     }
     //3.获取某个具体company下所有employee列表
-    @GetMapping(value="/{id}/employees")
-    public List<Employee> getEmployeesByCompanyId(int id){
-        return null;
+    @GetMapping("/{id}/employees")
+    public ResponseEntity  getEmployeesByCompanyId(@PathVariable Long id) throws Exception{
+        Company company = companyRepository.getOne(id);
+        if(Objects.isNull(company)){
+            return new ResponseEntity("company is not exist", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity(company.getEmployees(),HttpStatus.OK);
     }
     //4.分页查询，page等于1，pageSize等于5
-    @GetMapping(value="/page/1/pageSize/5")
-    public List<Company> getCompaniesByPage(){
-        return null;
+    @GetMapping("/page/{page}/pageSize/{pageSize}")
+    public ResponseEntity  getCompaniesByPage(@PathVariable int page,@PathVariable int pageSize) throws Exception {
+        Pageable pageable = new PageRequest(page - 1, pageSize);
+        return new ResponseEntity<>(companyRepository.findAll(pageable), HttpStatus.OK);
     }
     //5.增加一个company
-    @RequestMapping(value="",method= RequestMethod.POST)
-    public String addCompany(Company company){
-        return "success";
+    @PostMapping("")
+    public ResponseEntity  addCompany(@RequestBody Company company) throws Exception {
+        companyRepository.save(company);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
     //6.更新某个company
-    @RequestMapping(value="/{id}",method= RequestMethod.PUT)
-    public String updateCompanyById(@PathVariable int id){
-        return "success";
+    @PutMapping("/{id}")
+    public ResponseEntity  updateCompanyById(@PathVariable Long id,@RequestBody Company newCompany) throws Exception{
+        Company company = companyRepository.findOne(id);
+        company.setCompanyName(newCompany.getCompanyName());
+        company.setEmployeesNumber(newCompany.getEmployeesNumber());
+        companyRepository.save(company);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     //7.删除某个company
-    @RequestMapping(value="/{id}",method= RequestMethod.DELETE)
-    public String deleteCompanyById(@PathVariable int id){
-        return "success";
+    @DeleteMapping("/{id}")
+    public ResponseEntity  deleteCompanyById(@PathVariable Long id) throws Exception {
+        companyRepository.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

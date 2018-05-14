@@ -1,8 +1,9 @@
 package com.example.employee.restfulapi.entity;
 
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 
 @Entity
 public class Employee {
@@ -14,42 +15,30 @@ public class Employee {
     private Integer age;
     private String gender;
     private Integer salary;
-//    private Long companyId;
-
-    @ManyToOne(cascade = CascadeType.ALL,optional = false)
-    @JoinColumn(name = "companyId",referencedColumnName = "id")
-    private Company inCompany;
+    private Long companyId;
 
     public Employee() {
     }
 
-    public Employee(String name, Integer age, String gender, Integer salary,Company inCompany) {
+    public Employee(String name, Integer age, String gender, Integer salary,Long companyId) {
         this.name = name;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
-        this.inCompany = inCompany;
-    }
-
-    public Company getInCompany() {
-        return inCompany;
-    }
-
-    public void setInCompany(Company inCompany) {
-        this.inCompany = inCompany;
+        this.companyId = companyId;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-//    public Long getCompanyId() {
-//        return companyId;
-//    }
-//
-//    public void setCompanyId(Long companyId) {
-//        this.companyId = companyId;
-//    }
+    public Long getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
+    }
 
     public Integer getSalary() {
         return salary;

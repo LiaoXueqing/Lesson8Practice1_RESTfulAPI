@@ -1,22 +1,19 @@
 package com.example.employee.restfulapi.entity;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 public class Company {
-
-    @OneToMany(mappedBy = "inCompany",cascade = CascadeType.ALL)
-    private Set<Employee> employees=new HashSet<>();
 
     @Id
     @GeneratedValue
     private Long id;
     private String companyName;
     private Integer employeesNumber;
-
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "companyId")
+    private Set<Employee> employees;
     public Company() {
     }
 
